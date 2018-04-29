@@ -1,0 +1,36 @@
+﻿<Window x:Class="ABCClient.SendTranscriptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ABCClient"
+        mc:Ignorable="d" MinWidth="450" MinHeight="300"
+        Title="Send Transcript" Height="450" Width="700">
+    <Grid Margin="20,15,20,15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Content="Send transcripts in batch" Style="{StaticResource TaskTitle}"  Grid.Row="0" Grid.ColumnSpan="2" />
+        <Label Content="Choose school identity:" Style="{StaticResource LabelText}" Grid.Row="1" Grid.Column="0" />
+        <ComboBox Grid.Row="1" Grid.Column="1" IsEnabled="{Binding IsUIEnabled}" DisplayMemberPath="DisplayName" SelectedValuePath="AccountAddress" SelectedValue="{Binding SelectedEntity, Mode=TwoWay}" ItemsSource="{Binding Entities}" />
+        <DataGrid Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding Transcripts}" IsEnabled="{Binding IsUIEnabled}" CanUserAddRows="True" AutoGenerateColumns="False" CanUserSortColumns="False">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Header="Student" ItemsSource="{Binding Source={x:Static local:Entity.Entities}}" DisplayMemberPath="DisplayName" SelectedItemBinding="{Binding Student}" Width="*" />
+                <DataGridTextColumn Binding="{Binding CourseId}" Header="Course ID" Width="*" />
+                <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="*" />
+                <DataGridTextColumn Binding="{Binding Term}" Header="Term" Width="*" />
+                <DataGridTextColumn Binding="{Binding Grade}" Header="Grade" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Column="1" Grid.Row="5" IsEnabled="{Binding IsUIEnabled}" Content="Submit" HorizontalAlignment="Right" Padding="20,5" Command="{Binding Submit}" />
+    </Grid>
+</Window>
